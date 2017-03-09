@@ -1,5 +1,10 @@
 "use strict";
 
+function getGoalNumber(){
+  var goalNumber = prompt("Please enter the number you will race to");
+  return goalNumber;
+}
+
 function roll4Dice(){
  var dice4Rolled = Math.floor((Math.random()*4)+1);
  return dice4Rolled;
@@ -30,7 +35,24 @@ function roll20Dice(){
   return dice20Rolled;
 }
 
+//keep adding to runGame to test functions so far
+function runGame(){
+  var goalNumber = getGoalNumber();
+  return goalNumber;
+}
 
+var runGameResult = runGame();
+document.write(runGameResult);
+
+
+
+
+
+
+
+
+
+//extra code below
 function rollAllDice(){
   var dice4Rolled = roll4Dice();
   var dice6Rolled = roll6Dice();
@@ -42,7 +64,6 @@ function rollAllDice(){
   return allRolledTotal;
 }
 
-
-var allRolledTotal = rollAllDice();
-console.log(allRolledTotal);
-document.write("Your total dice roll is "+ allRolledTotal);
+//var allRolledTotal = rollAllDice();
+//console.log(allRolledTotal);
+//document.write("Your total dice roll is "+ allRolledTotal);
