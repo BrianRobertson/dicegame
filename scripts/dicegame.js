@@ -11,15 +11,7 @@ function getPlayerName(){
   return playerName;
 }
 
-function getNextMoveDirection(playerScore,goalNumber){
-var nextMoveDirection
-if (playerScore < goalNumber){
-nextMoveDirection = plus;
-} else {
-nextMoveDirection = minus;
-}
-return nextMoveDirection;
-}
+
 
 function getDice(playerName,playerScore,goalNumber){
   if (playerScore < goalNumber){
@@ -33,6 +25,7 @@ else {
   var diceChoice = getDiceChoice();
   return diceChoice;
 }
+
 function getDiceChoice(){
   var diceChoice = prompt("Which dice do you choose?");
   if(diceChoice === "4"){
@@ -43,13 +36,22 @@ function getDiceChoice(){
     var sixDice = roll6Dice();
     return sixDice;
   }
+  elseif(diceChoice === "8"){
+    var eightDice = roll8Dice();
+    return eightDice;
 }
-//function validateDiceChoice(diceChoice){
-//  var validDiceChoice;
-//  if (diceChoice = 4){
-//    validDiceChoice = 4;
-//  }
-//} else if (diceChoice = 6){
+  elseif(diceChoice === "10"){
+    var tenDice = roll10Dice();
+    return tenDice;
+}
+elseif(diceChoice === "12"){
+  var twelveDice = roll12Dice();
+  return twelveDice;
+}
+elseif(diceChoice === "20"){
+  var sixDice = roll6Dice();
+  return sixDice;
+}
 
 
 function roll4Dice(){
@@ -81,6 +83,7 @@ function roll20Dice(){
   var dice20Rolled = Math.floor((Math.random()*20)+1);
   return dice20Rolled;
 }
+
 function checkScore(playerScore, diceResult, goalNumber){
   if(diceResult < goalNumber){
     playerScore += player1DiceResult;
@@ -93,6 +96,8 @@ function checkScore(playerScore, diceResult, goalNumber){
   }
   return playerScore;
 }
+
+
 //keep adding to runGame to test functions so far
 function runGame(){
   var goalNumber = getGoalNumber();
@@ -100,16 +105,15 @@ function runGame(){
   var player1Score = 0;
   var player2Name = getPlayerName();
   var player2Score = 0;
-  //var nextMoveDirection =getNextMoveDirection();
+
   //while loop
 var player1DiceResult = getDice(player1Name, player1Score, goalNumber);
 player1Score = checkScore(player1Score, player1DiceResult, goalNumber);
 
 var player2DiceResult = getDice(player2Name, player2Score, goalNumber);
 player2Score = checkScore(player2Score, player2DiceResult, goalNumber);
-
 }
-//below calls runGame to test step by step.
+//call to runGame to test step by step.
 runGame();
 //document.write(runGameResult);
 
@@ -121,12 +125,30 @@ runGame();
 
 
 
-//extra code below
+//unused code below.
 
 
 
+//function validateDiceChoice(diceChoice){
+//  var validDiceChoice;
+//  if (diceChoice = 4){
+//    validDiceChoice = 4;
+//  }
+//} else if (diceChoice = 6){
 
 
+
+  //var nextMoveDirection =getNextMoveDirection();
+
+function getNextMoveDirection(playerScore,goalNumber){
+var nextMoveDirection
+if (playerScore < goalNumber){
+nextMoveDirection = plus;
+} else {
+nextMoveDirection = minus;
+}
+return nextMoveDirection;
+}
 
 function rollAllDice(){
   var dice4Rolled = roll4Dice();
