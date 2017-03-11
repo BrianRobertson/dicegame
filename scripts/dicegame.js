@@ -2,12 +2,12 @@
 
 function getGoalNumber(){
   var goalNumber = prompt("Please enter the number you will race to.");
-  return goalNumber;
+  return parseInt(goalNumber);
 }
 
 function getPlayerName(){
   var playerName = prompt("Please enter your player name.");
-  document.write("Hi " + playerName + ", Welcome to the game!");
+  console.log("Hi " + playerName + ", Welcome to the game!");
   return playerName;
 }
 
@@ -16,14 +16,13 @@ function getPlayerName(){
 function getDice(playerName,playerScore,goalNumber){
   if (playerScore < goalNumber){
     var numberToGo = (goalNumber - playerScore);
-    document.write(playerName + " you need " + numberToGo +" more to win.");
+    console.log(playerName + " you need " + numberToGo +" more to win.");
   }
   else {
     numberToGo = (playerScore - goalNumber);
-    document.write(playerName + " you need " + numberToGo +" less to win.");
+    console.log(playerName + " you need " + numberToGo +" less to win.");
   }
-  var diceChoice = getDiceChoice();
-  return diceChoice;
+
 }
 
 function getDiceChoice(){
@@ -46,7 +45,11 @@ function getDiceChoice(){
   else if(diceChoice === "20"){
     diceRoll = roll20Dice();
   }
-      return diceRoll;
+  else if(diceChoice === "exit"){
+    console.log("Thanks for playing");
+    diceRoll = "exit";
+  }
+  return diceRoll;
 }
 
 // end the above with an "else" that would send them back to making a new choice, in case their current choice is invalid.
@@ -93,16 +96,25 @@ function checkScore(playerScore, diceResult, goalNumber){
   return playerScore;
 }
 
-//function checkWinner(playerScore,goalNumber){
-//  if (playerScore === goalNumber){
-//    //declare winner
-//  }
-//  else //no winner
-//}
+// function below needs work.
+function checkWinner(playerScore,goalNumber){
+  var winner = 0;
+  if (playerScore === goalNumber){
+    winner = 1;
+    //call display winner function
+  }
+  else {
+    winner = 0;
+  }
+  return winner
+}
 
 
+function endGame(){
+  console.log("Thank you for playing.");
+  break;
+}
 
-//keep adding to runGame to test functions so far
 function runGame(){
   var goalNumber = getGoalNumber();
   var player1Name = getPlayerName();
@@ -110,24 +122,34 @@ function runGame(){
   var player2Name = getPlayerName();
   var player2Score = 0;
 
-  //while loop
-  var player1DiceResult = getDice(player1Name, player1Score, goalNumber);
-  player1Score = checkScore(player1Score, player1DiceResult, goalNumber);
-  //check winner
+  var winner = 0;
 
-  var player2DiceResult = getDice(player2Name, player2Score, goalNumber);
-  player2Score = checkScore(player2Score, player2DiceResult, goalNumber);
+
+  while (winner === 0){
+
+    getDice(player1Name, player1Score, goalNumber);
+    var player1DiceResult = getDiceChoice();
+    if(player1DiceResult === "exit"){
+      break;
+    }
+    player1Score = checkScore(player1Score, player1DiceResult, goalNumber);
+    console.log("player one score = " + player1Score);
+    winner = checkWinner(player1Score,goalNumber);
+    if(winner != 1){
+
+      getDice(player2Name, player2Score, goalNumber);
+      var player2DiceResult = getDiceChoice();
+      if(player2DiceResult === "exit"){
+        break;
+      }
+      player2Score = checkScore(player2Score, player2DiceResult, goalNumber);
+      console.log("player two score = " + player2Score);
+      winner = checkWinner(player2Score,goalNumber);
+    }
+  }
 }
-// check winner
 
-
-//call to runGame to test step by step.
-runGame();
-//document.write(runGameResult);
-
-
-
-
+//runGame();
 
 
 
@@ -135,7 +157,7 @@ runGame();
 
 //unused code below.
 
-
+//document.write(runGameResult);
 
 //function validateDiceChoice(diceChoice){
 //  var validDiceChoice;
@@ -148,26 +170,26 @@ runGame();
 
 //var nextMoveDirection =getNextMoveDirection();
 
-function getNextMoveDirection(playerScore,goalNumber){
-  var nextMoveDirection
-  if (playerScore < goalNumber){
-    nextMoveDirection = plus;
-  } else {
-    nextMoveDirection = minus;
-  }
-  return nextMoveDirection;
-}
+//function getNextMoveDirection(playerScore,goalNumber){
+//  var nextMoveDirection
+//  if (playerScore < goalNumber){
+//    nextMoveDirection = plus;
+//  } else {
+//    nextMoveDirection = minus;
+//  }
+//  return nextMoveDirection;
+//}
 
-function rollAllDice(){
-  var dice4Rolled = roll4Dice();
-  var dice6Rolled = roll6Dice();
-  var dice8Rolled = roll8Dice();
-  var dice10Rolled = roll10Dice();
-  var dice12Rolled = roll12Dice();
-  var dice20Rolled = roll20Dice();
-  var allRolledTotal = dice4Rolled + dice6Rolled + dice8Rolled + dice10Rolled + dice12Rolled + dice20Rolled;
-  return allRolledTotal;
-}
+//function rollAllDice(){
+//  var dice4Rolled = roll4Dice();
+//  var dice6Rolled = roll6Dice();
+//  var dice8Rolled = roll8Dice();
+//  var dice10Rolled = roll10Dice();
+//  var dice12Rolled = roll12Dice();
+//  var dice20Rolled = roll20Dice();
+//  var allRolledTotal = dice4Rolled + dice6Rolled + dice8Rolled + dice10Rolled + dice12Rolled + dice20Rolled;
+//  return allRolledTotal;
+//}
 
 //var allRolledTotal = rollAllDice();
 //console.log(allRolledTotal);
