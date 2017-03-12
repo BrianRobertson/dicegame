@@ -22,8 +22,9 @@ function getDice(playerName,playerScore,goalNumber){
     numberToGo = (playerScore - goalNumber);
     console.log(playerName + " you need " + numberToGo +" less to win.");
   }
-
 }
+
+
 
 function getDiceChoice(){
   var diceChoice = prompt("Which dice do you choose?");
@@ -46,9 +47,10 @@ function getDiceChoice(){
     diceRoll = roll20Dice();
   }
   else if(diceChoice === "exit"){
-    console.log("Thanks for playing");
+    console.log("Sorry you have to leave so soon.");
     diceRoll = "exit";
   }
+  // here is where the "else" should go, with prompt "your dice choice is invalid. Please choose a proper dice".
   return diceRoll;
 }
 
@@ -109,11 +111,13 @@ function checkWinner(playerScore,goalNumber){
   return winner
 }
 
-
-function endGame(){
-  console.log("Thank you for playing.");
-  break;
+function declareWinner(playerName){
+  console.log(playerName + " You WIN! Thank you both for playing!");
 }
+function endGame(playerName, playerName){
+  console.log(player1Name + " and " + player2Name + " Thank you both for playing!");
+}
+
 
 function runGame(){
   var goalNumber = getGoalNumber();
@@ -132,11 +136,15 @@ function runGame(){
     if(player1DiceResult === "exit"){
       break;
     }
+    console.log(player1Name + " you rolled a " + player1DiceResult)
     player1Score = checkScore(player1Score, player1DiceResult, goalNumber);
-    console.log("player one score = " + player1Score);
+    console.log(player1Name + " your score is " + player1Score);
     winner = checkWinner(player1Score,goalNumber);
-    if(winner != 1){
-
+    if(winner === 1){
+      declareWinner(player1Name);
+      endGame(player1Name, player2Name);
+    }
+    else {
       getDice(player2Name, player2Score, goalNumber);
       var player2DiceResult = getDiceChoice();
       if(player2DiceResult === "exit"){
@@ -144,7 +152,11 @@ function runGame(){
       }
       player2Score = checkScore(player2Score, player2DiceResult, goalNumber);
       console.log("player two score = " + player2Score);
-      winner = checkWinner(player2Score,goalNumber);
+      winner = checkWinner(player2Score, goalNumber);
+      if(winner === 1){
+        declareWinner(player2Name);
+        endGame(player2Name, player1Name);
+      }
     }
   }
 }
