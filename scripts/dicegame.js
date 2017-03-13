@@ -112,10 +112,10 @@ function checkWinner(playerScore,goalNumber){
 }
 
 function declareWinner(playerName){
-  console.log(playerName + " You WIN! Thank you both for playing!");
+  console.log(playerName + " you WIN!");
 }
-function endGame(playerName, playerName){
-  console.log(player1Name + " and " + player2Name + " Thank you both for playing!");
+function endGame(player1Name, player2Name){
+  console.log("Thank you " + player1Name + " and " + player2Name + " for playing!");
 }
 
 
