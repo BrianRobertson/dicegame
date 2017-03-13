@@ -1,33 +1,30 @@
 "use strict";
 
-function getGoalNumber(){
-  var goalNumber = prompt("Please enter the number you will race to.");
-  return parseInt(goalNumber);
-}
-
 function getPlayerName(){
   var playerName = prompt("Please enter your player name.");
-  console.log("Hi " + playerName + ", Welcome to the game!");
+  console.log("Hi " + playerName + ", welcome to the game!");
   return playerName;
 }
 
+function getGoalNumber(player1Name, player2Name){
+  var goalNumber = prompt(player1Name + " and " + player2Name + ", please decide together what number you will be racing to, and enter it here.");
+  console.log(player1Name + " and " + player2Name + ", you will each be dice racing to " + goalNumber + ". Good luck!");
+  return parseInt(goalNumber);
+}
 
-
-function getDice(playerName,playerScore,goalNumber){
+function informPlayerOnNextMove(playerName,playerScore,goalNumber){
   if (playerScore < goalNumber){
     var numberToGo = (goalNumber - playerScore);
-    console.log(playerName + " you need " + numberToGo +" more to win.");
+    console.log(playerName + ", you need " + numberToGo +" more to win.");
   }
   else {
     numberToGo = (playerScore - goalNumber);
-    console.log(playerName + " you need " + numberToGo +" less to win.");
+    console.log(playerName + ", you need " + numberToGo +" less to win.");
   }
 }
 
-
-
-function getDiceChoice(){
-  var diceChoice = prompt("Which dice do you choose?");
+function getDiceChoice(playerName){
+  var diceChoice = prompt(playerName + ", it is your turn. Please choose a dice by entering the number of sides. You may choose 4, 6, 8, 10, 12 or 20. Please type your choice here.");
   if(diceChoice === "4"){
     var diceRoll = roll4Dice();
   }
@@ -50,12 +47,8 @@ function getDiceChoice(){
     console.log("Sorry you have to leave so soon.");
     diceRoll = "exit";
   }
-  // here is where the "else" should go, with prompt "your dice choice is invalid. Please choose a proper dice".
   return diceRoll;
 }
-
-// end the above with an "else" that would send them back to making a new choice, in case their current choice is invalid.
-// also, maybe I could just have one dice function and just bring in the diceChoice value.
 
 function roll4Dice(){
   var dice4Rolled = Math.floor((Math.random()*4)+1);
@@ -87,8 +80,7 @@ function roll20Dice(){
   return dice20Rolled;
 }
 
-
-function checkScore(playerScore, diceResult, goalNumber){
+function moveScore(playerScore, diceResult, goalNumber){
   if (playerScore < goalNumber){
     playerScore += diceResult;
   }
@@ -98,12 +90,10 @@ function checkScore(playerScore, diceResult, goalNumber){
   return playerScore;
 }
 
-// function below needs work.
 function checkWinner(playerScore,goalNumber){
   var winner = 0;
   if (playerScore === goalNumber){
     winner = 1;
-    //call display winner function
   }
   else {
     winner = 0;
@@ -112,97 +102,49 @@ function checkWinner(playerScore,goalNumber){
 }
 
 function declareWinner(playerName){
-  console.log(playerName + " you WIN!");
+  console.log(playerName + ", you WIN!");
 }
+
 function endGame(player1Name, player2Name){
   console.log("Thank you " + player1Name + " and " + player2Name + " for playing!");
 }
 
-
 function runGame(){
-  var goalNumber = getGoalNumber();
   var player1Name = getPlayerName();
   var player1Score = 0;
   var player2Name = getPlayerName();
   var player2Score = 0;
-
+  var goalNumber = getGoalNumber(player1Name, player2Name);
   var winner = 0;
 
-
   while (winner === 0){
-
-    getDice(player1Name, player1Score, goalNumber);
-    var player1DiceResult = getDiceChoice();
+    informPlayerOnNextMove(player1Name, player1Score, goalNumber);
+    var player1DiceResult = getDiceChoice(player1Name);
     if(player1DiceResult === "exit"){
       break;
     }
-    console.log(player1Name + " you rolled a " + player1DiceResult)
-    player1Score = checkScore(player1Score, player1DiceResult, goalNumber);
-    console.log(player1Name + " your score is " + player1Score);
+    console.log(player1Name + ", you rolled a " + player1DiceResult)
+    player1Score = moveScore(player1Score, player1DiceResult, goalNumber);
+    console.log(player1Name + ", your new score is " + player1Score);
     winner = checkWinner(player1Score,goalNumber);
     if(winner === 1){
       declareWinner(player1Name);
       endGame(player1Name, player2Name);
     }
     else {
-      getDice(player2Name, player2Score, goalNumber);
-      var player2DiceResult = getDiceChoice();
+      informPlayerOnNextMove(player2Name, player2Score, goalNumber);
+      var player2DiceResult = getDiceChoice(player2Name);
       if(player2DiceResult === "exit"){
         break;
       }
-      player2Score = checkScore(player2Score, player2DiceResult, goalNumber);
-      console.log("player two score = " + player2Score);
+      console.log(player2Name + ", you rolled a " + player2DiceResult)
+      player2Score = moveScore(player2Score, player2DiceResult, goalNumber);
+      console.log(player2Name + ", your new score is " + player2Score);
       winner = checkWinner(player2Score, goalNumber);
       if(winner === 1){
         declareWinner(player2Name);
-        endGame(player2Name, player1Name);
+        endGame(player1Name, player2Name);
       }
     }
   }
 }
-
-//runGame();
-
-
-
-
-
-//unused code below.
-
-//document.write(runGameResult);
-
-//function validateDiceChoice(diceChoice){
-//  var validDiceChoice;
-//  if (diceChoice = 4){
-//    validDiceChoice = 4;
-//  }
-//} else if (diceChoice = 6){
-
-
-
-//var nextMoveDirection =getNextMoveDirection();
-
-//function getNextMoveDirection(playerScore,goalNumber){
-//  var nextMoveDirection
-//  if (playerScore < goalNumber){
-//    nextMoveDirection = plus;
-//  } else {
-//    nextMoveDirection = minus;
-//  }
-//  return nextMoveDirection;
-//}
-
-//function rollAllDice(){
-//  var dice4Rolled = roll4Dice();
-//  var dice6Rolled = roll6Dice();
-//  var dice8Rolled = roll8Dice();
-//  var dice10Rolled = roll10Dice();
-//  var dice12Rolled = roll12Dice();
-//  var dice20Rolled = roll20Dice();
-//  var allRolledTotal = dice4Rolled + dice6Rolled + dice8Rolled + dice10Rolled + dice12Rolled + dice20Rolled;
-//  return allRolledTotal;
-//}
-
-//var allRolledTotal = rollAllDice();
-//console.log(allRolledTotal);
-//document.write("Your total dice roll is "+ allRolledTotal);
